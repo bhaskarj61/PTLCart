@@ -15,10 +15,13 @@ import CartItem from '../components/CartItem';
 import NormalHeader from '../components/Header';
 import {addItem, clearCart, removeItem} from '../store/cart';
 
-interface CartState {
-  items: PRODUCT[];
+type CartItemProps = PRODUCT & {
+  quantity?: number;
+};
+type CartState = {
+  items: CartItemProps[];
   total: number;
-}
+};
 
 type Props = {
   navigation: NavigationProp<any, any>;
@@ -29,7 +32,7 @@ const CartContainer = ({navigation}: Props) => {
   const items = useSelector((state: {cart: CartState}) => state.cart.items);
   const total = useSelector((state: {cart: CartState}) => state.cart.total);
 
-  const cartAction = (item: PRODUCT, action: 'add' | 'remove') => {
+  const cartAction = (item: CartItemProps, action: 'add' | 'remove') => {
     if (action === 'add') {
       dispatch(addItem(item));
     } else {
@@ -56,9 +59,9 @@ const CartContainer = ({navigation}: Props) => {
 
   const renderFooter = () => (
     <View style={styles.cartPriceContainer}>
-      {!!items?.length && (
-        <Text style={styles.cartText}>TOTAL: {total.toFixed(2)}$</Text>
-      )}
+      <Text style={[styles.cartText, {color: '#363837'}]}>
+        TOTAL: {total.toFixed(2)}$
+      </Text>
     </View>
   );
 
@@ -127,13 +130,15 @@ const styles = StyleSheet.create({
   },
   cartText: {
     fontSize: 14,
-    fontWeight: '600',
-    color: '#363837',
+    fontWeight: 'bold',
+    // color: '#363837',
+    color: '#fff',
   },
   arrowRight: {
     height: 20,
     width: 20,
     marginLeft: 10,
+    tintColor: '#fff',
   },
 });
 

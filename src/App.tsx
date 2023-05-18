@@ -35,6 +35,7 @@ function App(): JSX.Element {
 const styles = StyleSheet.create({
   fill: {
     flex: 1,
+    backgroundColor: '#2dcc70',
   },
 });
 

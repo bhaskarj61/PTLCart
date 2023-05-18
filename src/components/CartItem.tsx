@@ -1,10 +1,15 @@
 import React, {useState} from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {PRODUCT} from '../services/modules/listing/listing';
-interface CardProps {
-  item: PRODUCT;
-  cartAction: (item: PRODUCT, action: 'add' | 'remove') => void;
-}
+
+type CartItem = PRODUCT & {
+  quantity?: number;
+};
+
+type CardProps = {
+  item: CartItem;
+  cartAction: (item: CartItem, action: 'add' | 'remove') => void;
+};
 
 const CartItem: React.FC<CardProps> = ({item, cartAction}) => {
   const [quantity, setQuantity] = useState(item?.quantity || 0);
@@ -25,7 +30,9 @@ const CartItem: React.FC<CardProps> = ({item, cartAction}) => {
     <View style={styles.container}>
       <Image source={{uri: item?.img}} style={styles.image} />
       <View style={styles.content}>
-        <Text style={styles.name}>{item?.name}</Text>
+        <Text style={styles.name} numberOfLines={2}>
+          {item?.name}
+        </Text>
         <View style={styles.info}>
           <Text style={styles.price}>${item?.price}</Text>
           <View style={styles.quantity}>

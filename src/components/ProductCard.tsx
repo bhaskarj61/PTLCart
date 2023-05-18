@@ -23,7 +23,9 @@ const ProductCard: React.FC<CardProps> = ({item, cartAction}) => {
     <View style={styles.container}>
       <Image source={{uri: item?.img}} style={styles.image} />
       <View>
-        <Text style={styles.name}>{item?.name}</Text>
+        <Text style={styles.name} numberOfLines={2}>
+          {item?.name}
+        </Text>
         <View style={styles.info}>
           <Text style={styles.price}>${item?.price}</Text>
           <View style={styles.quantity}>

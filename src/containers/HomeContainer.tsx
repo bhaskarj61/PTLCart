@@ -16,8 +16,12 @@ import {PRODUCT} from '../services/modules/listing/listing';
 import {addItem, removeItem} from '../store/cart';
 import NormalHeader from '../components/Header';
 
+type CartItem = PRODUCT & {
+  quantity?: number;
+};
+
 type CartState = {
-  items: PRODUCT[];
+  items: CartItem[];
   total: number;
 };
 
@@ -37,7 +41,7 @@ const HomeContainer = ({navigation}: Props) => {
     navigation.navigate('Cart');
   };
 
-  const cartAction = (item: PRODUCT, action: 'add' | 'remove') => {
+  const cartAction = (item: CartItem, action: 'add' | 'remove') => {
     if (action === 'add') {
       dispatch(addItem(item));
     } else {
@@ -126,12 +130,14 @@ const styles = StyleSheet.create({
   cartText: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#363837',
+    // color: '#363837',
+    color: '#fff',
   },
   arrowRight: {
     height: 20,
     width: 20,
     marginLeft: 10,
+    tintColor: '#fff'
   },
 });
 
