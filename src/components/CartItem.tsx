@@ -7,7 +7,7 @@ interface CardProps {
 }
 
 const CartItem: React.FC<CardProps> = ({item, cartAction}) => {
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(item?.quantity || 0);
 
   const handleRemoveQuantityChange = (value: number) => {
     if (value >= 0) {
@@ -26,20 +26,22 @@ const CartItem: React.FC<CardProps> = ({item, cartAction}) => {
       <Image source={{uri: item?.img}} style={styles.image} />
       <View style={styles.content}>
         <Text style={styles.name}>{item?.name}</Text>
-        <Text style={styles.price}>${item?.price}</Text>
-        <View style={styles.quantity}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => handleRemoveQuantityChange(quantity - 1)}
-            disabled={quantity === 1}>
-            <Text style={styles.buttonText}>-</Text>
-          </TouchableOpacity>
-          <Text style={styles.quantityText}>{quantity}</Text>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => handleAddQuantityChange(quantity + 1)}>
-            <Text style={styles.buttonText}>+</Text>
-          </TouchableOpacity>
+        <View style={styles.info}>
+          <Text style={styles.price}>${item?.price}</Text>
+          <View style={styles.quantity}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => handleRemoveQuantityChange(quantity - 1)}
+              disabled={quantity === 0}>
+              <Text style={styles.buttonText}>-</Text>
+            </TouchableOpacity>
+            <Text style={styles.quantityText}>{quantity}</Text>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => handleAddQuantityChange(quantity + 1)}>
+              <Text style={styles.buttonText}>+</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </View>
@@ -51,28 +53,32 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
     borderRadius: 5,
     marginBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#2dcc70',
   },
   image: {
     width: 80,
     height: 80,
     marginRight: 10,
   },
+  info: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   content: {
     flex: 1,
   },
   name: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 5,
+    fontSize: 12,
+    color: '#363837',
+    marginVertical: 5,
   },
   price: {
     fontSize: 14,
     color: '#888',
-    marginBottom: 10,
+    flex: 1,
   },
   quantity: {
     flexDirection: 'row',
@@ -82,7 +88,7 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     borderRadius: 15,
-    backgroundColor: '#ccc',
+    backgroundColor: '#2dcc70',
     alignItems: 'center',
     justifyContent: 'center',
     marginHorizontal: 5,
@@ -90,6 +96,7 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 20,
     fontWeight: 'bold',
+    color: '#fff',
   },
   quantityText: {
     fontSize: 16,

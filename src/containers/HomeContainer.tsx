@@ -64,12 +64,15 @@ const HomeContainer = ({navigation}: Props) => {
         navigation={navigation}
         textRight="Pretty Little Things"
       />
-      <FlatList
-        data={productData}
-        renderItem={renderItem}
-        contentContainerStyle={styles.listingContainer}
-        keyExtractor={item => item.id.toString()}
-      />
+      <View style={styles.listingContainer}>
+        <FlatList
+          data={productData}
+          numColumns={2}
+          showsVerticalScrollIndicator={false}
+          renderItem={renderItem}
+          keyExtractor={item => item.id.toString()}
+        />
+      </View>
       <View style={styles.cartContainer}>
         <View style={styles.cartPriceContainer}>
           <Text style={styles.cartText}>{total.toFixed(2)}$</Text>
@@ -98,6 +101,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   listingContainer: {
+    flex: 1,
     paddingHorizontal: 16,
     marginVertical: 16,
     backgroundColor: '#fff',

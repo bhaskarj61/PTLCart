@@ -20,7 +20,7 @@ function App(): JSX.Element {
   return (
     <Provider store={store}>
       <SafeAreaView style={styles.fill}>
-        <StatusBar barStyle={'light-content'} />
+        <StatusBar barStyle={'light-content'} backgroundColor={'#2dcc70'} />
         <NavigationContainer>
           <Stack.Navigator screenOptions={{headerShown: false}}>
             <Stack.Screen name="Home" component={HomeContainer} />
