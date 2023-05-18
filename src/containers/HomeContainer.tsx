@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -30,12 +30,38 @@ type Props = {
 };
 
 const HomeContainer = ({navigation}: Props) => {
+  const [listData, setListData] = useState<CartItem[]>([]);
   const dispatch = useDispatch();
 
   const allItems = useSelector((state: {cart: CartState}) => state.cart.items);
   const total = useSelector((state: {cart: CartState}) => state.cart.total);
 
   const {data: productData, isLoading} = useFetchListQuery(null);
+
+  useEffect(() => {
+    if (productData?.length) {
+      setListData(productData);
+    }
+  }, [productData]);
+
+  useEffect(() => {
+    if (allItems?.length) {
+      const updatedData = productData?.map((item: CartItem) => {
+        const element = allItems?.find(ele => ele.id === item.id);
+        if (element) {
+          const temp = {...item};
+          temp.quantity = element.quantity;
+
+          return temp;
+        }
+        return item;
+      });
+      setListData(updatedData);
+    } else {
+      setListData(productData);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allItems]);
 
   const goToCart = () => {
     navigation.navigate('Cart');
@@ -60,7 +86,6 @@ const HomeContainer = ({navigation}: Props) => {
       </View>
     );
   }
-
   return (
     <View style={styles.fill}>
       <Header
@@ -70,7 +95,7 @@ const HomeContainer = ({navigation}: Props) => {
       />
       <View style={styles.listingContainer}>
         <FlatList
-          data={productData}
+          data={listData}
           numColumns={2}
           showsVerticalScrollIndicator={false}
           renderItem={renderItem}

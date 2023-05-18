@@ -1,13 +1,25 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {PRODUCT} from '../services/modules/listing/listing';
+
+type CartItem = PRODUCT & {
+  quantity?: number;
+};
 interface CardProps {
-  item: PRODUCT;
+  item: CartItem;
   cartAction: (item: PRODUCT, action: 'add' | 'remove') => void;
 }
 
 const ProductCard: React.FC<CardProps> = ({item, cartAction}) => {
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(item?.quantity || 0);
+
+  useEffect(() => {
+    if (item?.quantity) {
+      setQuantity(item?.quantity);
+    } else {
+      setQuantity(0);
+    }
+  }, [item?.quantity]);
 
   const handleRemoveQuantityChange = (value: number) => {
     cartAction(item, 'remove');
