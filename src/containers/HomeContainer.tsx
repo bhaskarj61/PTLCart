@@ -81,7 +81,10 @@ const HomeContainer = ({navigation}: Props) => {
         <View style={styles.cartPriceContainer}>
           <Text style={styles.cartText}>{total.toFixed(2)}$</Text>
         </View>
-        <Pressable style={styles.viewCartContainer} onPress={goToCart}>
+        <Pressable
+          testID="cartButton"
+          style={styles.viewCartContainer}
+          onPress={goToCart}>
           <Text style={styles.cartText}>
             VIEW CART {`(${allItems?.length})`}
           </Text>
@@ -137,7 +140,7 @@ const styles = StyleSheet.create({
     height: 20,
     width: 20,
     marginLeft: 10,
-    tintColor: '#fff'
+    tintColor: '#fff',
   },
 });
 
