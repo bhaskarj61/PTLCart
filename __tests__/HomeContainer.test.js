@@ -5,7 +5,6 @@ import {store} from '../src/store';
 import {useFetchListQuery} from '../src/services/modules/listing';
 import HomeContainer from '../src/containers/HomeContainer';
 
-// const mockStore = configureStore([]);
 const mockData = [
   {
     id: 1,
@@ -26,11 +25,57 @@ const mockData = [
 jest.mock('../src/services/modules/listing');
 
 describe('HomeContainer', () => {
+  test('loader should render when data is fetching', () => {
+    const mockProductData = [];
+    const mockIsLoading = true;
+
+    jest.spyOn(React, 'useEffect').mockImplementation(f => f());
+
+    useFetchListQuery.mockReturnValueOnce({
+      data: mockProductData,
+      isLoading: mockIsLoading,
+    });
+
+    const navigation = {navigate: jest.fn()};
+
+    const home = render(
+      <Provider store={store}>
+        <HomeContainer navigation={navigation} />
+      </Provider>,
+    );
+
+    const loader = home.getByTestId('loader');
+    expect(loader).toBeTruthy();
+  });
+
+  test('renders the  cart component correctly', () => {
+    const mockProductData = mockData;
+    const mockIsLoading = false;
+
+    jest.spyOn(React, 'useEffect').mockImplementation(f => f());
+
+    useFetchListQuery.mockReturnValueOnce({
+      data: mockProductData,
+      isLoading: mockIsLoading,
+    });
+
+    const navigation = {navigate: jest.fn()};
+
+    const home = render(
+      <Provider store={store}>
+        <HomeContainer navigation={navigation} />
+      </Provider>,
+    );
+
+    const cartButton = home.getByTestId('cartButton');
+    expect(cartButton).toBeTruthy();
+  });
+
   test('navigates to cart on press', () => {
     const mockProductData = mockData;
     const mockIsLoading = false;
 
-    jest.spyOn(React, 'useEffect').mockImplementation(f => f()); // Mock useEffect to trigger the fetch query
+    jest.spyOn(React, 'useEffect').mockImplementation(f => f());
 
     useFetchListQuery.mockReturnValueOnce({
       data: mockProductData,
@@ -48,29 +93,5 @@ describe('HomeContainer', () => {
     fireEvent.press(cartButton);
 
     expect(navigation.navigate).toHaveBeenCalledWith('Cart');
-  });
-
-  it('renders the  cart component correctly', () => {
-    const mockProductData = mockData;
-    const mockIsLoading = false;
-
-    jest.spyOn(React, 'useEffect').mockImplementation(f => f()); // Mock useEffect to trigger the fetch query
-
-    useFetchListQuery.mockReturnValueOnce({
-      data: mockProductData,
-      isLoading: mockIsLoading,
-    });
-
-    const navigation = {navigate: jest.fn()};
-
-    const home = render(
-      <Provider store={store}>
-        <HomeContainer navigation={navigation} />
-      </Provider>,
-    );
-
-    // Check if the cart button is rendered
-    const cartButton = home.getByTestId('cartButton');
-    expect(cartButton).toBeTruthy();
   });
 });

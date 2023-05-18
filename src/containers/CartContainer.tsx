@@ -51,6 +51,7 @@ const CartContainer = ({navigation}: Props) => {
   const renderEmptyComponent = () => {
     return (
       <Image
+        testID="empty-cart-image"
         style={styles.noItemImage}
         source={require('../assets/images/emptyCart.png')}
       />
@@ -60,7 +61,7 @@ const CartContainer = ({navigation}: Props) => {
   const renderFooter = () => (
     <View style={styles.cartPriceContainer}>
       <Text style={[styles.cartText, {color: '#363837'}]}>
-        TOTAL: {total.toFixed(2)}$
+        TOTAL: {total?.toFixed(2)}$
       </Text>
     </View>
   );
@@ -80,7 +81,10 @@ const CartContainer = ({navigation}: Props) => {
         />
       </View>
       <View style={styles.cartContainer}>
-        <Pressable style={styles.cartClearContainer} onPress={removeCartItems}>
+        <Pressable
+          testID="clear-cart-button"
+          style={styles.cartClearContainer}
+          onPress={removeCartItems}>
           <Text style={styles.cartText}>CLEAR CART</Text>
         </Pressable>
         <Pressable style={styles.viewCartContainer} onPress={checkoutItems}>

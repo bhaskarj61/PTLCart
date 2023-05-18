@@ -56,7 +56,7 @@ const HomeContainer = ({navigation}: Props) => {
   if (isLoading) {
     return (
       <View style={[styles.fill, styles.center]}>
-        <ActivityIndicator size={40} color={'#2dcc70'} />
+        <ActivityIndicator testID="loader" size={40} color={'#2dcc70'} />
       </View>
     );
   }
