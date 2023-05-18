@@ -14,7 +14,7 @@ import {useFetchListQuery} from '../services/modules/listing';
 import ProductCard from '../components/ProductCard';
 import {PRODUCT} from '../services/modules/listing/listing';
 import {addItem, removeItem} from '../store/cart';
-import NormalHeader from '../components/Header';
+import Header from '../components/Header';
 
 type CartItem = PRODUCT & {
   quantity?: number;
@@ -63,7 +63,7 @@ const HomeContainer = ({navigation}: Props) => {
 
   return (
     <View style={styles.fill}>
-      <NormalHeader
+      <Header
         showBack={false}
         navigation={navigation}
         textRight="Pretty Little Things"

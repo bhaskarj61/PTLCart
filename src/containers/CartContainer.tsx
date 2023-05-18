@@ -12,7 +12,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {NavigationProp} from '@react-navigation/native';
 import {PRODUCT} from '../services/modules/listing/listing';
 import CartItem from '../components/CartItem';
-import NormalHeader from '../components/Header';
+import Header from '../components/Header';
 import {addItem, clearCart, removeItem} from '../store/cart';
 
 type CartItemProps = PRODUCT & {
@@ -68,7 +68,7 @@ const CartContainer = ({navigation}: Props) => {
 
   return (
     <View style={styles.container}>
-      <NormalHeader navigation={navigation} textRight="Cart" />
+      <Header navigation={navigation} textRight="Cart" />
       <View style={styles.items}>
         <FlatList
           data={items}

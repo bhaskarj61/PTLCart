@@ -27,7 +27,7 @@ const CartItem: React.FC<CardProps> = ({item, cartAction}) => {
   };
 
   return (
-    <View style={[styles.container, styles.shadow]}>
+    <View style={[styles.container]}>
       <Image source={{uri: item?.img}} style={styles.image} />
       <View style={styles.content} testID="cart-item-name">
         <Text style={styles.name} numberOfLines={2}>
@@ -63,6 +63,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginBottom: 10,
     backgroundColor: '#fff',
+    overflow: 'hidden',
+    borderBottomWidth: 1,
+    borderColor: '#D3D3D3',
   },
   image: {
     width: 80,
@@ -109,17 +112,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginHorizontal: 10,
   },
-  shadow: {
-    shadowColor: '#363837',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.7,
-    shadowRadius: 10,
-
-    elevation: 4,
-  },
 });
 
-export default CartItem;
+export default React.memo(CartItem);

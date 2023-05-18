@@ -8,7 +8,7 @@ type Props = {
   showBack?: boolean;
 };
 
-const NormalHeader = ({textRight, navigation, showBack}: Props) => {
+const Header = ({textRight, navigation, showBack}: Props) => {
   return (
     <View style={styles.container}>
       {showBack && (
@@ -46,10 +46,10 @@ const styles = StyleSheet.create({
   },
 });
 
-NormalHeader.defaultProps = {
+Header.defaultProps = {
   textRight: '',
   goTo: '',
   showBack: true,
 };
 
-export default NormalHeader;
+export default Header;
