@@ -6,12 +6,14 @@ interface CardProps {
   cartAction: (item: PRODUCT, action: 'add' | 'remove') => void;
 }
 
-const ProductCard: React.FC<CardProps> = ({item, cartAction}) => {
+const CartItem: React.FC<CardProps> = ({item, cartAction}) => {
   const [quantity, setQuantity] = useState(0);
 
   const handleRemoveQuantityChange = (value: number) => {
-    cartAction(item, 'remove');
-    setQuantity(value);
+    if (value >= 0) {
+      cartAction(item, 'remove');
+      setQuantity(value);
+    }
   };
 
   const handleAddQuantityChange = (value: number) => {
@@ -29,7 +31,7 @@ const ProductCard: React.FC<CardProps> = ({item, cartAction}) => {
           <TouchableOpacity
             style={styles.button}
             onPress={() => handleRemoveQuantityChange(quantity - 1)}
-            disabled={quantity === 0}>
+            disabled={quantity === 1}>
             <Text style={styles.buttonText}>-</Text>
           </TouchableOpacity>
           <Text style={styles.quantityText}>{quantity}</Text>
@@ -96,4 +98,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProductCard;
+export default CartItem;

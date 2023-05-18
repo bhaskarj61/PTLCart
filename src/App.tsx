@@ -22,7 +22,7 @@ function App(): JSX.Element {
       <SafeAreaView style={styles.fill}>
         <StatusBar barStyle={'light-content'} />
         <NavigationContainer>
-          <Stack.Navigator>
+          <Stack.Navigator screenOptions={{headerShown: false}}>
             <Stack.Screen name="Home" component={HomeContainer} />
             <Stack.Screen name="Cart" component={CartContainer} />
           </Stack.Navigator>
