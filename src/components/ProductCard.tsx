@@ -21,11 +21,6 @@ const ProductCard: React.FC<CardProps> = ({item, cartAction}) => {
     }
   }, [item?.quantity]);
 
-  const handleRemoveQuantityChange = (value: number) => {
-    cartAction(item, 'remove');
-    setQuantity(value);
-  };
-
   const handleAddQuantityChange = (value: number) => {
     cartAction(item, 'add');
     setQuantity(value);
@@ -42,16 +37,15 @@ const ProductCard: React.FC<CardProps> = ({item, cartAction}) => {
           <Text style={styles.price}>${item?.price}</Text>
           <View style={styles.quantity}>
             <TouchableOpacity
-              style={styles.button}
-              onPress={() => handleRemoveQuantityChange(quantity - 1)}
-              disabled={quantity === 0}>
-              <Text style={styles.buttonText}>-</Text>
-            </TouchableOpacity>
-            <Text style={styles.quantityText}>{quantity}</Text>
-            <TouchableOpacity
-              style={styles.button}
+              style={[
+                styles.button,
+                {backgroundColor: quantity < 1 ? '#2dcc70' : '#81E0A9'},
+              ]}
+              disabled={quantity < 1 ? false : true}
               onPress={() => handleAddQuantityChange(quantity + 1)}>
-              <Text style={styles.buttonText}>+</Text>
+              <Text style={styles.buttonText}>
+                {quantity < 1 ? 'Add To Cart' : 'Already in Cart'}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -100,17 +94,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   button: {
-    width: 30,
-    height: 30,
     borderRadius: 15,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
     backgroundColor: '#2dcc70',
     alignItems: 'center',
     justifyContent: 'center',
     marginHorizontal: 5,
   },
   buttonText: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 10,
     color: '#fff',
   },
   quantityText: {
